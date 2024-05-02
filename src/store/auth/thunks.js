@@ -1,3 +1,4 @@
+import { signWithGoogle } from "../../firebase/providers"
 import { chekingCredencials } from "./authSlice"
 
 export const chekingAuthentication = ({email,password}) =>{
@@ -10,5 +11,7 @@ export const chekingAuthentication = ({email,password}) =>{
 export const startGoogleSingIn = ()=>{
      return async(dispatch)=>{
         dispatch(chekingCredencials())
+     const result =  await signWithGoogle()
+     console.log({result})
     }
 }
