@@ -1,18 +1,21 @@
 import { Link as RouterLink } from 'react-router-dom'
 import { Button, Grid, Link, TextField, Typography } from '@mui/material'
 import { Google } from '@mui/icons-material'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { AuthLayouth } from '../layout/AuthLayouth'
 import { useForm } from '../../hooks/useForm'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { chekingCredencials } from '../../store/auth/authSlice'
 import { startGoogleSingIn } from '../../store/auth/thunks'
 export const LoginPage = () => {
+  const { status } = useSelector(state => state.auth)
   const dispatch = useDispatch()
   const { email, pasword, onInputChange } = useForm({
     email: 'martin@outlook.es',
     pasword: '12434'
   })
+
+  const isAuthenticating = useMemo(() => status === 'cheking', [status])
 
   const onSubmit = (e) => {
     e.preventDefault()
@@ -43,6 +46,7 @@ export const LoginPage = () => {
           <Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
             <Grid item xs={12} sm={6}>
               <Button type='submit' variant='contained' fullWidth
+                disabled={isAuthenticating}
               >
                 Login
               </Button>
@@ -50,7 +54,8 @@ export const LoginPage = () => {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <Button variant='contained' fullWidth onClick={onGoogleSingIn}>
+              <Button variant='contained' fullWidth onClick={onGoogleSingIn}
+                disabled={isAuthenticating}>
                 <Google />
                 <Typography sx={{ ml: 1 }}>Google</Typography>
               </Button>
