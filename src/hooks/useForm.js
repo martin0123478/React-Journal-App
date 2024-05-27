@@ -37,7 +37,7 @@ if(formValidation[formValue] !==null){
             
         }
         setformValidation(formCheckedValues)
-        console.log(formCheckedValues)
+      
     }
 
     return {

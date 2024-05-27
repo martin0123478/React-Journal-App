@@ -4,6 +4,8 @@ import { Google } from '@mui/icons-material'
 import React, { useState } from 'react'
 import { AuthLayouth } from '../layout/AuthLayouth'
 import { useForm } from '../../hooks/useForm'
+import { useDispatch } from 'react-redux'
+import { startCreatingUserWithEmailAndPassword } from '../../store/auth/thunks'
 
 const formData = {
     email: '',
@@ -16,7 +18,7 @@ const formValidations = {
     displayName: [(value) => value.length >= 1, 'El nombre es obligatorio'],
 }
 export const RegisterPage = () => {
-
+    const dispatch = useDispatch()
     const [fromSubmitted, setfromSubmitted] = useState(false)
     const { displayName, email, password, formState, onInputChange,
         isFormValid, displayNameValid, emailValid, passwordValid } = useForm(formData, formValidations)
@@ -25,12 +27,13 @@ export const RegisterPage = () => {
     const onSubmit = (e) => {
         e.preventDefault()
         setfromSubmitted(true)
-        console.log(formState)
+        if (!isFormValid) return
+        dispatch(startCreatingUserWithEmailAndPassword({ email, password, displayName }))
     }
     return (
 
         <AuthLayouth titulo='Crear cuenta'>
-            <h1>FormValid {isFormValid ? 'valido' : 'incorrecto'}</h1>
+
             <form onSubmit={onSubmit}>
                 <Grid container>
                     <Grid item xs={12} sx={{ mt: 2 }}>
