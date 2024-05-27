@@ -1,18 +1,18 @@
 import { Link as RouterLink } from 'react-router-dom'
 import { Button, Grid, Link, TextField, Typography } from '@mui/material'
-import { Google } from '@mui/icons-material'
+import { Google, Password } from '@mui/icons-material'
 import React, { useMemo } from 'react'
 import { AuthLayouth } from '../layout/AuthLayouth'
 import { useForm } from '../../hooks/useForm'
 import { useDispatch, useSelector } from 'react-redux'
 import { chekingCredencials } from '../../store/auth/authSlice'
-import { startGoogleSingIn } from '../../store/auth/thunks'
+import { startGoogleSingIn, startLoginWithEmailAndPassword } from '../../store/auth/thunks'
 export const LoginPage = () => {
   const { status } = useSelector(state => state.auth)
   const dispatch = useDispatch()
   const { email, pasword, onInputChange } = useForm({
-    email: 'martin@outlook.es',
-    pasword: '12434'
+    email: '',
+    pasword: ''
   })
 
   const isAuthenticating = useMemo(() => status === 'cheking', [status])
@@ -20,7 +20,8 @@ export const LoginPage = () => {
   const onSubmit = (e) => {
     e.preventDefault()
     console.log({ email, pasword })
-    dispatch(chekingCredencials(email, pasword))
+    dispatch(startLoginWithEmailAndPassword({ email, pasword }))
+
   }
   const onGoogleSingIn = () => {
     console.log('onGoogleSingIn')
@@ -39,7 +40,7 @@ export const LoginPage = () => {
 
           <Grid item xs={12} sx={{ mt: 2 }}>
             <TextField label='Contraseña' type='password' placeholder='contraseña' fullWidth
-              name='contraseña' onChange={onInputChange} value={pasword}
+              name='pasword' onChange={onInputChange} value={pasword}
             />
           </Grid>
 
