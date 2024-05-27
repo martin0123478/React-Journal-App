@@ -52,12 +52,9 @@ export const loginWithEmailPassword = async({email,password}) =>{
     try {
         const resp = await signInWithEmailAndPassword(FirebaseAuth,email,password)
         console.log(resp)
-       /* return{
+       return{
         ok:true,
-        uid,
-        photoURL,
-        displayName
-       } */
+       }
     } catch (error) {
         console.log(error)
         return {ok:false,errorMessage:error.errorMessage}

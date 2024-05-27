@@ -34,7 +34,7 @@ export const startLoginWithEmailAndPassword = ({email,password}) =>{
         dispatch(chekingCredencials())
         const result = await loginWithEmailPassword({email,password})
         console.log(result)
-     if(result.ok)  dispatch(login(result))
+     if(!result.ok)  dispatch(logout(result.errorMessage))
            
     }
 }
