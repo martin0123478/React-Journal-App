@@ -10,17 +10,17 @@ import { startGoogleSingIn, startLoginWithEmailAndPassword } from '../../store/a
 export const LoginPage = () => {
   const { status } = useSelector(state => state.auth)
   const dispatch = useDispatch()
-  const { email, pasword, onInputChange } = useForm({
+  const { email, password, onInputChange } = useForm({
     email: '',
-    pasword: ''
+    password: ''
   })
 
   const isAuthenticating = useMemo(() => status === 'cheking', [status])
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log({ email, pasword })
-    dispatch(startLoginWithEmailAndPassword({ email, pasword }))
+    console.log({ email, password })
+    dispatch(startLoginWithEmailAndPassword({ email, password }))
 
   }
   const onGoogleSingIn = () => {
@@ -40,7 +40,7 @@ export const LoginPage = () => {
 
           <Grid item xs={12} sx={{ mt: 2 }}>
             <TextField label='Contraseña' type='password' placeholder='contraseña' fullWidth
-              name='pasword' onChange={onInputChange} value={pasword}
+              name='password' onChange={onInputChange} value={password}
             />
           </Grid>
 
